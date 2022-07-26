@@ -115,6 +115,16 @@ Merge all commits from `branch-name` into the current branch you are on.
 
 ## Stashing
 
+```
+git stash
+```
+Stash all uncommitted changes (staged and unstaged) in your working directory, in order to return to them later. If you have changes in your working directory, and want to switch to another branch without commiting them, Git will alert you to commit those changes before. If you don't want to commit them, and also don't want to take them with you in other branches, you can use `git stash` to save them for a future use and clean your working directory.
+
+```
+git stash pop
+```
+Remove the most recently stashed changes in your stash and re-apply them to your working copy, in order to be able to commit them, or continue working with them.
+
 ## Change HEAD Reference
 
 ## Restore, Reset and Revert

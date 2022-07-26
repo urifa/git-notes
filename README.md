@@ -125,7 +125,14 @@ git stash pop
 ```
 Remove the most recently stashed changes in your stash and re-apply them to your working copy, in order to be able to commit them, or continue working with them.
 
-## Change HEAD Reference
+## Changing HEAD Reference
+
+```
+git checkout commit-hash
+```
+Jump back in time to a particular commit specified by its commit hash. You are now in a "detached HEAD" state, meaning that HEAD does not point to a branch reference (the branch reference is a pointer to the last commit made on this particular branch), but to a particular commit. If you type `git log`, we will see all commits published up until this one. In this state, you cannot make changes, but you can:
+- Examine contents of that old commit and finally get out of the "detached HEAD" state by switching back to a particular branch.
+- Create a new branch from this state, which will be created taking this commit reference. If you switch to that new branch, you will no longer be on a "detached HEAD" state (HEAD will point to that new branch reference), so you will be able to publish new commits to this branch.
 
 ## Restore, Reset and Revert
 

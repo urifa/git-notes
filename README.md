@@ -139,12 +139,27 @@ Jump back in time to a particular commit specified by its commit hash. You are n
 ```
 git restore filename.txt
 ```
-Restore filename.txt content to the contents in the HEAD. This is useful if you have made changes to a file, saved it, but then you decide you don't want these changes to be applied.
+Discard changes made on filename.txt and restore it back to where it looked like at HEAD (which by default ponts to the last commit of the current branch). This is useful if you have made changes to a file, saved it, but then you decide you don't want these changes to be applied.
 
 ```
 git restore --staged filename.txt
 ```
 Remove filename.txt to the staging area, so that it will not be included in the next commit, when you execute `git commit`. This is useful if you accidentally added a file to the staging area with `git add`.
+
+```
+git reset commit-hash
+```
+Reset the current repo back to a previous commit, discarding any changes made after that commit. It removes all commits that came after that, but all changes on files still remain on your working directory, so you don't lose the changes, only the commits. This is useful if you made some commits on the wrong branch, and you want to keep that work, but move it to a separate branch.
+
+```
+git reset --hard commit-hash
+```
+Reset the current repo back to a previous commit, discarding any changes made after that commit. It removes both the commits and the actual changes on files.
+
+```
+git revert commit-hash
+```
+It's similar to `git reset` in that they both undo changes, but `git revert` does that by creating a brand new commit which reverses all changes made from a particular commit. As it results in a new commit, you will be prompted to enter a commit message. If you collaborate with other people, and you want to reverse some commits that other people already have on their machines, you should use `git revert` instead of `git reset`. 
 
 ## Remote Repositories
 

@@ -183,7 +183,21 @@ Adding a new remote called `origin`, which is the standard name for a remote, as
 ```
 git clone url
 ```
-Clone a repo hosted on Github or some other cloud platform, providing its url. Git will retrieve all the files associated with the repository and will copy them to your local machine. In addition, Git initializes a new repository on your machine, giving you access to the full Git history of the cloned project. Just like with `git init`, make sure you are not in a Git repository when you clone. When you clone a Github repo to your local machine, the default remote name setup for you is called `origin`.
+Clone a repo hosted on Github or some other cloud platform, providing its url. Git will retrieve all the files associated with the repository and will copy them to your local machine. In addition, Git initializes a new repository on your machine, giving you access to the full Git history of the cloned project. When you clone a Github repo to your local machine, the default remote name setup for you is called `origin`. Even though you have access to all Git history of the cloned project, it's not all in your local workspace, only the default branch is imported as a local branch and is connected to the corresponding remote tracking branch. Other branches in the remote repo are accessible as remote tracking branches, and will not be listed if you type `git branch`.
+
+## Remote Branches
+
+```
+git branch -r
+```
+View the remote branches your local repo know about. When you work with remote repos, your local repo have two references, which will start to the same spot but will diverge as you make new commits on the branch locally.
+- The standard local branch reference, which will be moving around as you add new commits.
+- A remote tracking branch, which is a reference to the state of the branch on the specific remote. It can be moved by yourself, as it indicates where this branch was pointing at the time you last communicated with the remote repo. It follows this pattern: `<remote>/<branch>`.
+
+```
+git switch remote-branch-name
+```
+When cloning a remote repo to yout local machine, only the default branch is imported as a local branch and is connected to the corresponding remote tracking branch. Even though, you can run `git switch` with the name of the remote tracking branch, and if Git detects it exists, it will create a new local branch from the remote tracking branch of the same name, and will connect both.
 
 ```
 git push origin branch-name

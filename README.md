@@ -164,12 +164,33 @@ It's similar to `git reset` in that they both undo changes, but `git revert` doe
 ## Remote Repositories
 
 ```
-git clone 
-```
-kjlkj
-
-```
 git remote
 ```
-khkjh
+Display all remotes you have in the current local repo. Before you can push anything up to Github, you need to tell Git about your remote repository on Github, a destination to push up to. These destinations are called remotes, and each remote is simply a label for a URL where a hosted repository live.
+- When you create a new remote for a local repo pointing to hosted repo, you must specify the name for it. A convention to name it is `origin`.
+- When you clone a Github repo to your local machine, the default remote name setup for you is called `origin`.
 
+```
+git remote -v
+```
+Display all remotes you have in the current local repo, alongisde with the corresponding URL where the hosted repository live.
+
+```
+git remote add origin url
+```
+Adding a new remote called `origin`, which is the standard name for a remote, associated to a particular Github repo URL. Origin is a conventional Git remote name, but you can use any other name.
+
+```
+git clone url
+```
+Clone a repo hosted on Github or some other cloud platform, providing its url. Git will retrieve all the files associated with the repository and will copy them to your local machine. In addition, Git initializes a new repository on your machine, giving you access to the full Git history of the cloned project. Just like with `git init`, make sure you are not in a Git repository when you clone. When you clone a Github repo to your local machine, the default remote name setup for you is called `origin`.
+
+```
+git push origin branch-name
+```
+Once you have a remote set up, either by using `got clone` or `git remote add`, you can push the work on your local repo up to Github using this command. You need to specify the name of the remote, which in this case is `origin` and the specific local branch you want to push up to that remote. It will also create that branch on Github, in case it does not exist yet.
+
+```
+git push -u origin branch-name
+```
+In this case, the `-u` option allows you to set the upstream of the branch you are pushing. It's as a link connecting your local branch to a branch on Github. This sets the upstream of the local branch specified, so that it tracks that same branch on the origin repo. This allow you to use `git push` next time, without having to specify the remote name nor the branch name, everytime you want to push the last changes of that local branch up to Github.

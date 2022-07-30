@@ -195,16 +195,40 @@ View the remote branches your local repo know about. When you work with remote r
 - A remote tracking branch, which is a reference to the state of the branch on the specific remote. It can be moved by yourself, as it indicates where this branch was pointing at the time you last communicated with the remote repo. It follows this pattern: `<remote>/<branch>`.
 
 ```
+git checkout remote/branch
+```
+Switch to a remote tracking branch. When cloning a remote repo to yout local machine, only the default branch is imported as a local branch and is connected to the corresponding remote tracking branch. Other remote branches are accessible locally but as remote tracking branches. You can switch to one of these branches, but we will be in a "detached HEAD" state, so you will not be able to publish new commits from there. 
+
+```
 git switch remote-branch-name
 ```
-When cloning a remote repo to yout local machine, only the default branch is imported as a local branch and is connected to the corresponding remote tracking branch. Even though, you can run `git switch` with the name of the remote tracking branch, and if Git detects it exists, it will create a new local branch from the remote tracking branch of the same name, and will connect both.
+If you use `git switch` with the name of a specific remote tracking branch that does not exist as a local branch on your repo, if Git detects it exists, it will create a new local branch from the remote tracking branch of the same name, and will connect both. Now we will be able to publish new commits from there.
+
+## Pushing
 
 ```
 git push origin branch-name
 ```
-Once you have a remote set up, either by using `got clone` or `git remote add`, you can push the work on your local repo up to Github using this command. You need to specify the name of the remote, which in this case is `origin` and the specific local branch you want to push up to that remote. It will also create that branch on Github, in case it does not exist yet.
+Push the work on your local repo up to Github, once you have a remote set up, either by using `git clone` or `git remote add`. You need to specify the name of the remote, which in this case is `origin` and the specific local branch you want to push up to that remote. It will also create that branch on Github, in case it does not exist yet.
 
 ```
 git push -u origin branch-name
 ```
 In this case, the `-u` option allows you to set the upstream of the branch you are pushing. It's as a link connecting your local branch to a branch on Github. This sets the upstream of the local branch specified, so that it tracks that same branch on the origin repo. This allow you to use `git push` next time, without having to specify the remote name nor the branch name, everytime you want to push the last changes of that local branch up to Github.
+
+## Fetching and Pulling
+
+```
+git fetch remote-name
+```
+Download branches and history from a specific remote repo you have configured under <remote-name> (if not specified, it defaults to `origin`) to your local repo. It updates the remote tracking branch with the latest changes from the remote repository, but without integrating them into your local working directory nor updating your current local branch. This means that your local branch reference will continue being the same, but the remote tracking branch will be updated. It lets you see what others have been working on, without having to merge those changes into your local repo. You will be able to see them using `git checkout <remote/branch>`.
+
+```
+git fetch remote-name branch-name
+```
+You can also fetch one single branch, specifying the branch name after the remote name. This means only changes from one specific remote branch will be imported to your local repo.
+
+```
+git pull remote-name branch-name
+```
+Retrieve changes from a remote repo and update your local repo with those changes. Unlike `git fetch`, it actually updates your local HEAD branch with whatever changes are retrieved from the remote. It's like a combination of `git fetch` and `git merge`, because it updates the remote tracking branch with the latest changes from the remote repo, and also updates your current local branch with whatever changes are on the remote tracking branch. Just like `git merge`, whatever branch you run it from is where the changes will be merged into. If there are merge conflicts, the pull will not be automatic, and you will need to fix the conflicts on the affected files, publish a commmit containing that fix, and make a push to the remote repo.

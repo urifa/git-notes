@@ -262,4 +262,18 @@ git push <remote> main
 ```
 Finally, you need to swith to the main branch, merge in the feature branch (with the fix applied), and push changes up to GitHub again.
 
+## Forks
 
+When collaborating in big projects with other people, it's a common pattern that every user creates a personal copy of the original project. This copy is known as a form of the original project.
+
+Forks are not a native Git feature, but a functionallity built into platforms like GitHub or Bitbucket. If you clone the original project to your local machine, usually you don't have permissions to push your own work, but if you clone your fork, these restrictions will not apply anymore. Working with forks in big projects usually follows this workflow:
+
+1. Make your own fork of the original project (each collaborator will work with its own fork).
+2. Clone your forked repo to your local machine. Git automatically adds a remote called `origin` that points to yout forked repo on GitHub.
+3. Set up a second remote, usually named `upstream`, pointing to the original project repo on GitHub.
+4. Regularly, before doing new work, make a pull from the upstream remote repo to your local repo, in order to get the latest changes in your local repo.
+5. To share your changes, push your local repo to the origin remote repo.
+6. From your forked repo on GitHub, make a pull request to the original project GitHub repo.
+7. Once your pull request is accepted, the original project repo will contain your changes.
+
+This workflow allows a project maintainer to accept contributions from developers all around the world without having to add them as actual owners of the main project repo or worry about giving them permissions to push to the repo.

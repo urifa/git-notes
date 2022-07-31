@@ -232,3 +232,34 @@ You can also fetch one single branch, specifying the branch name after the remot
 git pull <remote> <branch>
 ```
 Retrieve changes from a remote repo to your local repo. Unlike `git fetch`, it actually updates your local HEAD branch with whatever changes are retrieved from the remote, merging them in. It's like a combination of `git fetch` and `git merge`. Just like `git merge`, whatever branch you run it from is where the changes will be merged into. If there are merge conflicts, the pull will not be automatic, and you will need to fix the conflicts on the affected files, publish a commmit containing that fix, and make a push back to the remote repo.
+
+## Pull Requests
+
+When collaborating in projects with other people, it's a common pattern that every user is working in some specific feature on a separated branch. In that scenario, Pull requests provide a mechanism to alert team-members to new work that needs to be reviewed and approved on a given branch, in order to be merged to another branch (usually the main branch). 
+
+Pull requests are not a native Git feature, but a functionallity built into platforms like GitHub or Bitbucket. They typically follow this workflow:
+
+1. Do some work locally on a feature branch.
+2. Push up the feature branch on GitHub.
+3. Open a pull request using the feature branch just pushed up to GitHub.
+4. Wait for the pull request to be approved and merged.
+
+Just like any other merge, sometimes there are conflicts that need to be resolved when merging a pull request. In this case, you can perform the merge and fix the conflicts using the GitHub's interactive editor, or on your local machine.
+
+If you want to resolve the conflics locally, you need to follow these steps:
+
+```
+git fetch <remote>
+git switch <feature-branch>
+git merge main
+```
+First, you need to switch to the feature branch, merging in the main branch, and then resolve the conflicts in the affected files.
+
+```
+git switch main
+git merge <feature-branch>
+git push <remote> main
+```
+Finally, you need to swith to the main branch, merge in the feature branch (with the fix applied), and push changes up to GitHub again.
+
+

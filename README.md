@@ -105,6 +105,8 @@ git config --global init.defaultBranch main
 ```
 Change the local Git default branch name to `main`, in order to follow the Github criteria. The `--global` parameter means that this configuration will be used across every Git instance, so all new local repositories will use now `main` as the default branch name.
 
+## Merging
+
 ```
 git merge <branch>
 ```
@@ -112,6 +114,25 @@ Merge all commits from `<branch>` into the current local branch you are on.
 - If there are not additional commits to the current branch since you split off and created `<branch>`, the merge is a fast-forward. All commits from `<branch>` will be added to the current branch, and the current branch will end up referring to the same last commit of `<branch>`.
 - If there are additional commits to the current branch since the split off, in case there are no conflicts, Git will create a merge commit for us, adding all changes from `<branch>` to the current branch. This commit will have two parent branches, both `<branch>` and the current branch.
 - If there are additional commits to the current branch since the split off, but there are conflicting changes, Git will alert that to us. In that case, you will have to manually open the files with conflicting changes (Git will add specific markers in those files) and fix them. Finally you will need to add those changes to the staging area, and commit them.
+
+## Rebasing
+
+```
+git rebase <branch>
+```
+Move the entire branch you are on into `<branch>`, starting at the tip of `<branch>`. The original commits on `<branch>` are unchanged, but Git will create new commits at the tip of `<branch>`, for each of the original commits from the branch you are on. This ends up in a linear structure and avoids merge commits, but also rewrites the history. Rebasing is used as an alternative to merging, but also as a cleanup tool. The main workflow use of rebase is this: 
+- If you are working on a feature branch, but the main branch is very active, you may need to constantly merge all new work of the main branch to your feature branch, so the feature branch will end up with a bunch of merge commits and the history will become muddied. You can instead rebase the feature branch onto the main branch, moving the entire feature branch at the tip of the main branch, rewritting the history.
+- When working in collaborative projects, and you have pushed commits up to GitHub, do not rebase them unless you are positive no one on the team is using those commits.
+
+```
+git rebase --continue
+```
+Continue with the rebasing, in case of conflicting changes during the first attempt. Just like with merging, rebasing may end up with conflicts. In this case, the rebase may have been started but not completely finished, so you will need to resolve the conflicts on files, adding them to the staging area with `git add`, and finally, instead of make a commit with that, continue the rebasing.
+
+```
+git rebase -i HEAD~<n>
+```
+Enter the interactive mode, which allows you to edit commits, add files, drop commits, etc. In this case, you are not rebasing onto another branch. Instead, you are rebasing a series of commits onto the HEAD they currently are based on.
 
 ## Stashing
 
